@@ -336,7 +336,7 @@ class CloudFormation < ZergGemPlugin::Plugin "/driver"
         ap 'Checking if image already exists...'
         imageSet = fogCompute.describe_images( { 'name' => "#{base_name}-#{nameTag}" } )[:body]
         if imageSet['imagesSet'].length > 0
-            imageId = imageSet[0]['imageId']
+            imageId = imageSet['imagesSet'][0]['imageId']
             ap "Deregistering old image #{imageId}..."
             response = fogCompute.deregister_image(imageId)
             abort("ERROR: deregistering #{imageId} failed!") unless response[:body]['return'] == true
